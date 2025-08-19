@@ -1,4 +1,9 @@
-import { CSSProperties, MouseEventHandler, useContext } from 'react';
+import {
+	CSSProperties,
+	MouseEventHandler,
+	useCallback,
+	useContext,
+} from 'react';
 import { ProductContext } from './ProductCard';
 import styles from '../styles/styles.module.css';
 
@@ -7,11 +12,12 @@ export interface Props {
 	style?: CSSProperties;
 }
 
-export const ProductButtons = ({ 
-	className, 
-	style 
-}: Props) => {
-	const { counter, increaseBy } = useContext(ProductContext);
+export const ProductButtons = ({ className, style }: Props) => {
+	const { counter, maxValue, increaseBy } = useContext(ProductContext);
+	const isMaxReached = useCallback(
+		() => counter === maxValue,
+		[counter, maxValue]
+	);
 
 	return (
 		<div
@@ -26,7 +32,7 @@ export const ProductButtons = ({
 			</button>
 			<div className={styles.countLabel}> {counter} </div>
 			<button
-				className={styles.buttonAdd}
+				className={`${styles.buttonAdd} ${isMaxReached() && styles.disabled}`}
 				onClick={() => increaseBy(1)}
 			>
 				+
