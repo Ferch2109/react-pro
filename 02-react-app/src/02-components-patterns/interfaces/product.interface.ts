@@ -13,6 +13,7 @@ export interface Product {
 export interface ProductContextProps {
 	product: Product;
 	counter: number;
+	maxValue: number;
 	increaseBy: (_: number) => void;
 }
 
@@ -21,4 +22,14 @@ export interface ProductCardDotProps {
 	Title: (_: ProductTitleProps) => JSX.Element;
 	Image: (_: ProductImageProps) => JSX.Element;
 	Buttons: (_: ProductButtonsProps) => JSX.Element;
+}
+
+export interface ProductCardHandlers {
+	count: number;
+	isMaxCountReached: boolean;
+	maxCount: number;
+	product: Product;
+
+	increaseBy: (value: number) => void;
+	reset: () => void;
 }
